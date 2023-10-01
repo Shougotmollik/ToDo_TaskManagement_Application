@@ -1,16 +1,19 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:todo_appliaction/utils/dialog_box.dart';
 import 'package:todo_appliaction/utils/todo_tile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
+  
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  final _controller=TextEditingController();
   // list of todo task
   List toDoList = [
     ["make tutorial", false],
@@ -22,6 +25,18 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       toDoList[index][1] = !toDoList[index][1];
     });
+  }
+
+  // create a new task method
+  void createNewTask() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return DialogBox(
+          controller: _controller,
+        );
+      },
+    );
   }
 
   @override
@@ -48,6 +63,10 @@ class _HomePageState extends State<HomePage> {
             onChanged: (value) => checkBoxChanged(value, index),
           );
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: createNewTask,
+        child: Icon(Icons.add),
       ),
     );
   }
