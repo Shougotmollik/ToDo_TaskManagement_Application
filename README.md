@@ -6,7 +6,9 @@
 The ToDo Task Management App is an open-source mobile application developed using Flutter and Dart. It's designed to help users organize their tasks efficiently and enhance productivity. This GitHub repository is the central hub for managing the project, tracking issues, collaborating with contributors, and documenting the app's development.
 
 # Demo 
-![Screenshot_1696264841](https://github.com/Shougotmollik/ToDo_TaskManagement_Application/assets/113712457/6c8f25c3-c777-47cd-b7e0-5b2a183341b2)
+![Screenshot_1696268034](https://github.com/Shougotmollik/ToDo_TaskManagement_Application/assets/113712457/d48902ca-36f3-48ea-82f6-233103ed41d9)
+
+
 
 
 # Key Features:
