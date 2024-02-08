@@ -15,6 +15,10 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           title: const Text("App Bar"),
           backgroundColor: Colors.deepOrange,
+          actions: [
+            IconButton(onPressed: () {}, icon: const Icon(Icons.comment)),
+            IconButton(onPressed: () {}, icon: const Icon(Icons.phone))
+          ],
         ),
         bottomNavigationBar: NavigationBar(
           backgroundColor: Colors.deepOrangeAccent,
@@ -27,6 +31,44 @@ class MyApp extends StatelessWidget {
                 icon: Icon(Icons.portable_wifi_off), label: "Home"),
             NavigationDestination(icon: Icon(Icons.person), label: "Home"),
           ],
+        ),
+        drawer: Drawer(
+          backgroundColor: Colors.deepOrange[400],
+          child: ListView(
+            children: const [
+              UserAccountsDrawerHeader(
+                decoration: BoxDecoration(color: Colors.deepOrangeAccent),
+                accountName: Text("Shougot Mollik"),
+                accountEmail: Text("Shougot@info.abc"),
+              ),
+              ListTile(
+                leading: Icon(Icons.home),
+                title: Text("Home"),
+              )
+            ],
+          ),
+        ),
+        body: Container(
+          color: Colors.deepOrangeAccent[100],
+          child: const Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.all(16.0),
+                child: TextField(
+                  decoration: InputDecoration(
+                    label: Text("First Name"),
+                    suffixIcon: Icon(Icons.person_off),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.deepOrange),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(20),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
