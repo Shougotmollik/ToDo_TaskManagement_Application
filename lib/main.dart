@@ -14,7 +14,19 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           title: const Text("App Bar"),
+          backgroundColor: Colors.deepOrange,
+        ),
+        bottomNavigationBar: NavigationBar(
           backgroundColor: Colors.deepOrangeAccent,
+          height: 70,
+          destinations: const [
+            NavigationDestination(icon: Icon(Icons.home), label: "Home"),
+            NavigationDestination(
+                icon: Icon(Icons.comment_bank), label: "Comment"),
+            NavigationDestination(
+                icon: Icon(Icons.portable_wifi_off), label: "Home"),
+            NavigationDestination(icon: Icon(Icons.person), label: "Home"),
+          ],
         ),
       ),
     );
