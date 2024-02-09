@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
             NavigationDestination(
                 icon: Icon(Icons.comment_bank), label: "Comment"),
             NavigationDestination(
-                icon: Icon(Icons.portable_wifi_off), label: "Home"),
+                icon: Icon(Icons.portable_wifi_off), label: "Protable"),
             NavigationDestination(icon: Icon(Icons.person), label: "Profile"),
           ],
         ),
