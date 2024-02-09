@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
                 icon: Icon(Icons.comment_bank), label: "Comment"),
             NavigationDestination(
                 icon: Icon(Icons.portable_wifi_off), label: "Home"),
-            NavigationDestination(icon: Icon(Icons.person), label: "Home"),
+            NavigationDestination(icon: Icon(Icons.person), label: "Profile"),
           ],
         ),
         drawer: Drawer(
