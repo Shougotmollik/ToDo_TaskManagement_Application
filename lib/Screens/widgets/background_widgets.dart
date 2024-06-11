@@ -11,7 +11,10 @@ class BackgroundWidgets extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        SvgPicture.asset(AppImages.bgImage),
+        SvgPicture.asset(
+          AppImages.bgImage,
+          fit: BoxFit.cover,
+        ),
         child,
       ],
     );
