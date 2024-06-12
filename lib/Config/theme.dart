@@ -13,16 +13,22 @@ class AppThemes {
       ),
     ),
     textTheme: const TextTheme(
-        titleLarge: TextStyle(
-          color: Colors.black,
-          fontSize: 28,
-          fontWeight: FontWeight.bold,
-        ),
-        labelMedium: TextStyle(
-          color: Colors.grey,
-          fontSize: 14,
-          fontWeight: FontWeight.w500,
-        )),
+      titleLarge: TextStyle(
+        color: Colors.black,
+        fontSize: 28,
+        fontWeight: FontWeight.bold,
+      ),
+      labelMedium: TextStyle(
+        color: Colors.grey,
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
+      ),
+      labelLarge: TextStyle(
+        color: Colors.grey,
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
+      ),
+    ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primaryColor,
