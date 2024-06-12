@@ -14,10 +14,15 @@ class AppThemes {
     ),
     textTheme: const TextTheme(
         titleLarge: TextStyle(
-      color: Colors.black,
-      fontSize: 28,
-      fontWeight: FontWeight.bold,
-    )),
+          color: Colors.black,
+          fontSize: 28,
+          fontWeight: FontWeight.bold,
+        ),
+        labelMedium: TextStyle(
+          color: Colors.grey,
+          fontSize: 14,
+          fontWeight: FontWeight.w500,
+        )),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primaryColor,
