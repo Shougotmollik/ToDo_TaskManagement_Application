@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:todoapp/Config/colors.dart';
+import 'package:todoapp/Screens/AuthScreen/signup_screen.dart';
 import 'package:todoapp/Screens/widgets/background_widgets.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -35,6 +36,9 @@ class _SignInScreenState extends State<SignInScreen> {
                     controller: emailTEController,
                     decoration: const InputDecoration(
                       hintText: 'Email',
+                      hintStyle: TextStyle(
+                        color: Colors.grey,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -42,6 +46,9 @@ class _SignInScreenState extends State<SignInScreen> {
                     controller: passwordTEController,
                     decoration: const InputDecoration(
                       hintText: 'Password',
+                      hintStyle: TextStyle(
+                        color: Colors.grey,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -71,7 +78,14 @@ class _SignInScreenState extends State<SignInScreen> {
                                   color: AppColors.primaryColor,
                                 ),
                                 recognizer: TapGestureRecognizer()
-                                  ..onTap = () {},
+                                  ..onTap = () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const SignupScreen(),
+                                        ));
+                                  },
                               ),
                             ],
                           ),
