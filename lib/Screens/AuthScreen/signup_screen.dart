@@ -1,7 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:todoapp/Config/colors.dart';
-import 'package:todoapp/Screens/AuthScreen/signin_screen.dart';
 import 'package:todoapp/Screens/widgets/background_widgets.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -12,6 +11,12 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
+  final TextEditingController _emailTEController = TextEditingController();
+  final TextEditingController _firstNameTEController = TextEditingController();
+  final TextEditingController _lastNameTEController = TextEditingController();
+  final TextEditingController _mobileTEController = TextEditingController();
+  final TextEditingController _passwordTEController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,6 +35,8 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                   const SizedBox(height: 16),
                   TextFormField(
+                    controller: _emailTEController,
+                    keyboardType: TextInputType.emailAddress,
                     decoration: const InputDecoration(
                       hintText: "Email",
                       hintStyle: TextStyle(
@@ -39,6 +46,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                   const SizedBox(height: 8),
                   TextFormField(
+                    controller: _firstNameTEController,
                     decoration: const InputDecoration(
                       hintText: "First Name",
                       hintStyle: TextStyle(
@@ -48,6 +56,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                   const SizedBox(height: 8),
                   TextFormField(
+                    controller: _lastNameTEController,
                     decoration: const InputDecoration(
                       hintText: "Last Name",
                       hintStyle: TextStyle(
@@ -57,6 +66,8 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                   const SizedBox(height: 8),
                   TextFormField(
+                    controller: _mobileTEController,
+                    keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
                       hintText: "Mobile",
                       hintStyle: TextStyle(
@@ -66,6 +77,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                   const SizedBox(height: 8),
                   TextFormField(
+                    controller: _passwordTEController,
                     decoration: const InputDecoration(
                       hintText: "Password",
                       hintStyle: TextStyle(
@@ -78,36 +90,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       onPressed: () {},
                       child: const Icon(Icons.arrow_circle_right_outlined)),
                   const SizedBox(height: 24),
-                  Center(
-                    child: RichText(
-                      text: TextSpan(
-                          text: "Have account?",
-                          style: TextStyle(
-                            color: Colors.black.withOpacity(0.8),
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: 0.4,
-                          ),
-                          children: [
-                            TextSpan(
-                              text: " Sign in",
-                              style: const TextStyle(
-                                color: AppColors.primaryColor,
-                                fontWeight: FontWeight.w600,
-                                letterSpacing: 0.4,
-                              ),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const SignInScreen(),
-                                      ));
-                                },
-                            )
-                          ]),
-                    ),
-                  )
+                  _buildBackToSignInSection(),
                 ],
               ),
             ),
@@ -115,5 +98,44 @@ class _SignupScreenState extends State<SignupScreen> {
         ),
       ),
     );
+  }
+
+  Center _buildBackToSignInSection() {
+    return Center(
+      child: RichText(
+        text: TextSpan(
+            text: "Have account?",
+            style: TextStyle(
+              color: Colors.black.withOpacity(0.8),
+              fontWeight: FontWeight.w600,
+              letterSpacing: 0.4,
+            ),
+            children: [
+              TextSpan(
+                text: " Sign in",
+                style: const TextStyle(
+                  color: AppColors.primaryColor,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0.4,
+                ),
+                recognizer: TapGestureRecognizer()..onTap = _onTapSignUpButton,
+              )
+            ]),
+      ),
+    );
+  }
+
+  void _onTapSignUpButton() {
+    Navigator.pop(context);
+  }
+
+  @override
+  void dispose() {
+    _emailTEController.dispose();
+    _firstNameTEController.dispose();
+    _lastNameTEController.dispose();
+    _mobileTEController.dispose();
+    _passwordTEController.dispose();
+    super.dispose();
   }
 }
