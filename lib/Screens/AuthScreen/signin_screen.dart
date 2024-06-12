@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:todoapp/Config/colors.dart';
+import 'package:todoapp/Screens/AuthScreen/email_verification_screen.dart';
 import 'package:todoapp/Screens/AuthScreen/signup_screen.dart';
 import 'package:todoapp/Screens/widgets/background_widgets.dart';
 
@@ -12,11 +13,12 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
+  // All controller here
+  final TextEditingController _emailTEController = TextEditingController();
+  final TextEditingController _passwordTEController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    final TextEditingController emailTEController = TextEditingController();
-    final TextEditingController passwordTEController = TextEditingController();
-
     return Scaffold(
       body: BackgroundWidgets(
         child: SafeArea(
@@ -33,7 +35,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   ),
                   const SizedBox(height: 24),
                   TextFormField(
-                    controller: emailTEController,
+                    controller: _emailTEController,
                     decoration: const InputDecoration(
                       hintText: 'Email',
                       hintStyle: TextStyle(
@@ -43,7 +45,8 @@ class _SignInScreenState extends State<SignInScreen> {
                   ),
                   const SizedBox(height: 8),
                   TextFormField(
-                    controller: passwordTEController,
+                    controller: _passwordTEController,
+                    keyboardType: TextInputType.emailAddress,
                     decoration: const InputDecoration(
                       hintText: 'Password',
                       hintStyle: TextStyle(
@@ -61,7 +64,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     child: Column(
                       children: [
                         TextButton(
-                          onPressed: () {},
+                          onPressed: _onTapForgotPasswordButton,
                           child: const Text("Forgot Password?"),
                         ),
                         RichText(
@@ -78,14 +81,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                   color: AppColors.primaryColor,
                                 ),
                                 recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const SignupScreen(),
-                                        ));
-                                  },
+                                  ..onTap = _onTapSignInButton,
                               ),
                             ],
                           ),
@@ -100,5 +96,30 @@ class _SignInScreenState extends State<SignInScreen> {
         ),
       ),
     );
+  }
+
+  void _onTapSignInButton() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const SignupScreen(),
+      ),
+    );
+  }
+
+  void _onTapForgotPasswordButton() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const EmailVerificationScreen(),
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _emailTEController.dispose();
+    _passwordTEController.dispose();
+    super.dispose();
   }
 }
