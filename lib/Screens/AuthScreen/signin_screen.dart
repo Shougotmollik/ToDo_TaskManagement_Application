@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:todoapp/Config/colors.dart';
 import 'package:todoapp/Screens/widgets/background_widgets.dart';
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
+class SignInScreen extends StatefulWidget {
+  const SignInScreen({super.key});
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  State<SignInScreen> createState() => _SignInScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     final TextEditingController emailTEController = TextEditingController();
