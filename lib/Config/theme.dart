@@ -15,7 +15,7 @@ class AppThemes {
     textTheme: const TextTheme(
       titleLarge: TextStyle(
         color: Colors.black,
-        fontSize: 28,
+        fontSize: 38,
         fontWeight: FontWeight.bold,
       ),
       labelMedium: TextStyle(

@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:todoapp/Config/colors.dart';
+import 'package:todoapp/Screens/AuthScreen/set_password_screen.dart';
 import 'package:todoapp/Screens/AuthScreen/signin_screen.dart';
 import 'package:todoapp/Screens/widgets/background_widgets.dart';
 
@@ -36,49 +37,14 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
                   style: Theme.of(context).textTheme.labelLarge,
                 ),
                 const SizedBox(height: 16),
-                PinCodeTextField(
-                  length: 6,
-                  animationType: AnimationType.fade,
-                  pinTheme: PinTheme(
-                    shape: PinCodeFieldShape.box,
-                    borderRadius: BorderRadius.circular(5),
-                    fieldHeight: 50,
-                    fieldWidth: 40,
-                    activeFillColor: Colors.white,
-                    selectedColor: AppColors.primaryColor,
-                    selectedFillColor: Colors.white,
-                    inactiveFillColor: Colors.white,
-                  ),
-                  animationDuration: const Duration(milliseconds: 300),
-                  backgroundColor: Colors.transparent,
-                  enableActiveFill: true,
-                  controller: _pinTEController,
-                  appContext: context,
-                  keyboardType: TextInputType.number,
-                ),
+                _buildPinCodeTextField(),
                 const SizedBox(height: 16),
-                ElevatedButton(onPressed: () {}, child: const Text("Verify")),
+                ElevatedButton(
+                  onPressed: _onTapPinVerifyButton,
+                  child: const Text("Verify"),
+                ),
                 const SizedBox(height: 36),
-                Center(
-                  child: RichText(
-                    text: TextSpan(
-                        text: "Have account? ",
-                        style: const TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: 0.4),
-                        children: [
-                          TextSpan(
-                              text: "Sign In",
-                              style: const TextStyle(
-                                  color: AppColors.primaryColor,
-                                  fontWeight: FontWeight.w600,
-                                  letterSpacing: 0.4),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = _onTapSignInButton)
-                        ]),
-                  ),
-                )
+                _buildBackToSignInSection(),
               ],
             ),
           ),
@@ -87,12 +53,69 @@ class _PinVerificationScreenState extends State<PinVerificationScreen> {
     );
   }
 
+  Widget _buildBackToSignInSection() {
+    return Center(
+      child: RichText(
+        text: TextSpan(
+            text: "Have account? ",
+            style: const TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 0.4),
+            children: [
+              TextSpan(
+                  text: "Sign In",
+                  style: const TextStyle(
+                      color: AppColors.primaryColor,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 0.4),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = _onTapSignInButton)
+            ]),
+      ),
+    );
+  }
+
+  Widget _buildPinCodeTextField() {
+    return PinCodeTextField(
+      length: 6,
+      animationType: AnimationType.fade,
+      pinTheme: PinTheme(
+        shape: PinCodeFieldShape.box,
+        borderRadius: BorderRadius.circular(5),
+        fieldHeight: 50,
+        fieldWidth: 40,
+        activeFillColor: Colors.white,
+        selectedColor: AppColors.primaryColor,
+        selectedFillColor: Colors.white,
+        inactiveFillColor: Colors.white,
+      ),
+      animationDuration: const Duration(milliseconds: 300),
+      backgroundColor: Colors.transparent,
+      enableActiveFill: true,
+      controller: _pinTEController,
+      appContext: context,
+      keyboardType: TextInputType.number,
+    );
+  }
+
   void _onTapSignInButton() {
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const SignInScreen(),
+      ),
+      (route) => false,
+    );
+  }
+
+  void _onTapPinVerifyButton() {
     Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const SignInScreen(),
-        ));
+      context,
+      MaterialPageRoute(
+        builder: (context) => const SetPasswordScreen(),
+      ),
+    );
   }
 
   @override
