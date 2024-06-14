@@ -5,11 +5,12 @@ class AppThemes {
   AppThemes._();
 
   static ThemeData lightTheme = ThemeData(
-    inputDecorationTheme: const InputDecorationTheme(
+    inputDecorationTheme: InputDecorationTheme(
       fillColor: Colors.white,
       filled: true,
       border: OutlineInputBorder(
         borderSide: BorderSide.none,
+        borderRadius: BorderRadius.circular(12),
       ),
     ),
     textTheme: const TextTheme(

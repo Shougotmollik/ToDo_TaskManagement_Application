@@ -4,6 +4,7 @@ import 'package:todoapp/Screens/HomeScreen/canceled_task_screen.dart';
 import 'package:todoapp/Screens/HomeScreen/completed_task_screen.dart';
 import 'package:todoapp/Screens/HomeScreen/new_task_screen.dart';
 import 'package:todoapp/Screens/HomeScreen/progress_task_screen.dart';
+import 'package:todoapp/Screens/widgets/profile_appbar.dart';
 
 class MainBottomNavScreen extends StatefulWidget {
   const MainBottomNavScreen({super.key});
@@ -24,6 +25,7 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: profileAppBar(),
       body: _screens[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
