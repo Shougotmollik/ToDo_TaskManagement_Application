@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:todoapp/Config/colors.dart';
 import 'package:todoapp/Screens/AuthScreen/email_verification_screen.dart';
 import 'package:todoapp/Screens/AuthScreen/signup_screen.dart';
+import 'package:todoapp/Screens/HomeScreen/main_bottom_nav_screen.dart';
 import 'package:todoapp/Screens/widgets/background_widgets.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -56,7 +57,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   ),
                   const SizedBox(height: 16),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: _onTapHomeScreenButton,
                     child: const Icon(Icons.arrow_circle_right_outlined),
                   ),
                   const SizedBox(height: 16),
@@ -96,6 +97,14 @@ class _SignInScreenState extends State<SignInScreen> {
         ),
       ),
     );
+  }
+
+  void _onTapHomeScreenButton() {
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const MainBottomNavScreen(),
+        ));
   }
 
   void _onTapSignInButton() {
