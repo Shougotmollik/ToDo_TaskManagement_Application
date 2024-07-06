@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:todoapp/Config/colors.dart';
+import 'package:todoapp/Screens/AuthScreen/signin_screen.dart';
 import 'package:todoapp/Screens/HomeScreen/update_profile_screen.dart';
+import 'package:todoapp/controller/auth_controller.dart';
 
 AppBar profileAppBar(context, [bool fromUpdateProfile = false]) {
   return AppBar(
@@ -20,16 +22,16 @@ AppBar profileAppBar(context, [bool fromUpdateProfile = false]) {
               builder: (context) => const UpdateProfileScreen(),
             ));
       },
-      child: const Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Shougot Mollik",
-            style: TextStyle(color: Colors.white, fontSize: 16),
+            AuthController.userData?.fullName ?? '',
+            style: const TextStyle(color: Colors.white, fontSize: 16),
           ),
           Text(
-            "email@gmail.com",
-            style: TextStyle(
+            AuthController.userData?.email ?? '',
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 12,
               fontWeight: FontWeight.w500,
@@ -40,7 +42,16 @@ AppBar profileAppBar(context, [bool fromUpdateProfile = false]) {
     ),
     actions: [
       IconButton(
-          onPressed: () {},
+          onPressed: () async {
+            await AuthController.clearAllData();
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const SignInScreen(),
+              ),
+              (route) => false,
+            );
+          },
           icon: const Icon(
             Icons.logout_sharp,
             color: Colors.white,
