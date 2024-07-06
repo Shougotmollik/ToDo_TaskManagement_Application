@@ -6,7 +6,9 @@ import 'package:todoapp/Screens/AuthScreen/signup_screen.dart';
 import 'package:todoapp/Screens/HomeScreen/main_bottom_nav_screen.dart';
 import 'package:todoapp/Screens/widgets/background_widgets.dart';
 import 'package:todoapp/Screens/widgets/snack_bar_message.dart';
+import 'package:todoapp/controller/auth_controller.dart';
 import 'package:todoapp/data/model/network_response.dart';
+import 'package:todoapp/data/network_caller/login-model.dart';
 import 'package:todoapp/data/network_caller/network_caller.dart';
 import 'package:todoapp/data/utilities/url.dart';
 import 'package:todoapp/utility/app_constants.dart';
@@ -156,7 +158,7 @@ class _SignInScreenState extends State<SignInScreen> {
       "password": _passwordTEController.text,
     };
 
-    final NetworkResponse networkResponse =
+    final NetworkResponse response =
         await NetworkCaller.postRequest(AppUrls.loginUrl, body: requestData);
 
     _signInProgress = false;
@@ -164,16 +166,24 @@ class _SignInScreenState extends State<SignInScreen> {
       setState(() {});
     }
 
-    if (networkResponse.isSuccess) {
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const MainBottomNavScreen(),
-          ));
+    if (response.isSuccess) {
+      LoginModel loginModel = LoginModel.fromJson(response.responseData);
+      await AuthController.saveUserAccessToken(loginModel.token!);
+      await AuthController.saveUserData(loginModel.userModel!);
+
+      if (mounted) {
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const MainBottomNavScreen(),
+            ));
+      }
     } else {
       if (mounted) {
-        showSnackBarMessage(context,
-            networkResponse.errorMessage ?? "Invalid Username/password");
+        showSnackBarMessage(
+          context,
+          response.errorMessage ?? "Invalid Username/password",
+        );
       }
     }
   }
