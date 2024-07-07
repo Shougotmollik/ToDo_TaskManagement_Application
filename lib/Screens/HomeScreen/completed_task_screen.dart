@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:todoapp/Screens/widgets/task_item.dart';
 
 class CompletedTaskScreen extends StatefulWidget {
   const CompletedTaskScreen({super.key});
@@ -15,7 +14,9 @@ class _CompletedTaskScreenState extends State<CompletedTaskScreen> {
       body: ListView.builder(
         itemCount: 5,
         itemBuilder: (context, index) {
-          return const TaskItems();
+          return null;
+
+          // return const TaskItems();
         },
       ),
     );
