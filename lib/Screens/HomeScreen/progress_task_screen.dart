@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:todoapp/Screens/widgets/task_item.dart';
 
 class ProgressTaskScreen extends StatefulWidget {
   const ProgressTaskScreen({super.key});
@@ -15,7 +14,7 @@ class _ProgressTaskScreenState extends State<ProgressTaskScreen> {
       body: ListView.builder(
         itemCount: 5,
         itemBuilder: (context, index) {
-          return const TaskItems();
+          // return const TaskItems();
         },
       ),
     );
