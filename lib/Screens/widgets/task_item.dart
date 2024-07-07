@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:todoapp/data/model/task_model.dart';
 
 class TaskItems extends StatelessWidget {
   const TaskItems({
     super.key,
+    required this.taskModel,
   });
+
+  final TaskModel taskModel;
 
   @override
   Widget build(BuildContext context) {
@@ -11,14 +15,14 @@ class TaskItems extends StatelessWidget {
       color: Colors.white,
       elevation: 0,
       child: ListTile(
-        title: const Text("Title Text should be here"),
+        title: Text(taskModel.title ?? ''),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text("Description about about title are explain here!!"),
-            const Text(
-              "Date:14/06/24",
-              style: TextStyle(
+            Text(taskModel.description ?? ''),
+            Text(
+              taskModel.createdDate ?? '',
+              style: const TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.w600,
               ),
@@ -27,7 +31,7 @@ class TaskItems extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Chip(
-                  label: const Text("New"),
+                  label: Text(taskModel.status ?? 'New'),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
