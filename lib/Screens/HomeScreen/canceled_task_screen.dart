@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:todoapp/Screens/widgets/task_item.dart';
 
 class CanceledTaskScreen extends StatefulWidget {
   const CanceledTaskScreen({super.key});
@@ -15,7 +14,9 @@ class _CanceledTaskScreenState extends State<CanceledTaskScreen> {
       body: ListView.builder(
         itemCount: 5,
         itemBuilder: (context, index) {
-          return const TaskItems();
+          return null;
+
+          // return const TaskItems();
         },
       ),
     );
