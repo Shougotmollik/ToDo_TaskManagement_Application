@@ -207,13 +207,14 @@ class _SignupScreenState extends State<SignupScreen> {
       "firstName": _firstNameTEController.text.trim(),
       "lastName": _lastNameTEController.text.trim(),
       "mobile": _mobileTEController.text.trim(),
-      "password": _passwordTEController,
+      "password": _passwordTEController.text,
       "photo": ""
     };
 
     NetworkResponse response = await NetworkCaller.postRequest(
-        AppUrls.registrationUrl,
-        body: registerInput);
+      AppUrls.registrationUrl,
+      body: registerInput,
+    );
     _registrationInProgress = false;
     if (mounted) {
       setState(() {});
