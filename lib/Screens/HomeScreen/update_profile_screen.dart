@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todoapp/Config/colors.dart';
 import 'package:todoapp/Screens/widgets/background_widgets.dart';
 import 'package:todoapp/Screens/widgets/profile_appbar.dart';
+import 'package:todoapp/controller/auth_controller.dart';
 
 class UpdateProfileScreen extends StatefulWidget {
   const UpdateProfileScreen({super.key});
@@ -16,6 +17,14 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   final TextEditingController _lastNameTEController = TextEditingController();
   final TextEditingController _mobileTEController = TextEditingController();
   final TextEditingController _passwordTEController = TextEditingController();
+
+  @override
+  void initState() {
+    final userData = AuthController.userData!;
+    _emailTEController.text = userData.email ?? '';
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +95,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
             ],
           ),
         ),
-      )), 
+      )),
     );
   }
 
