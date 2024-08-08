@@ -3,7 +3,6 @@ import 'package:todoapp/Config/colors.dart';
 import 'package:todoapp/Screens/widgets/background_widgets.dart';
 import 'package:todoapp/Screens/widgets/profile_appbar.dart';
 import 'package:todoapp/controller/auth_controller.dart';
-import 'package:todoapp/utility/app_constants.dart';
 
 class UpdateProfileScreen extends StatefulWidget {
   const UpdateProfileScreen({super.key});
@@ -116,6 +115,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                     if (value?.trim().isEmpty ?? true) {
                       return 'Enter your password';
                     }
+                    return null;
                   },
                   decoration: const InputDecoration(
                       hintText: "Password",
