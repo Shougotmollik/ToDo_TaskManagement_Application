@@ -8,7 +8,7 @@ class TaskModel {
   TaskModel(
       {this.sId, this.title, this.description, this.status, this.createdDate});
 
-  TaskModel.formJson(Map<String, dynamic> json) {
+  TaskModel.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     title = json['title'];
     description = json['description'];

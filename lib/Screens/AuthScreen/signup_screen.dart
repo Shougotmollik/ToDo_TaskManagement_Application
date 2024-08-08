@@ -212,7 +212,7 @@ class _SignupScreenState extends State<SignupScreen> {
     };
 
     NetworkResponse response = await NetworkCaller.postRequest(
-      AppUrls.registrationUrl,
+      AppUrls.registration,
       body: registerInput,
     );
     _registrationInProgress = false;

@@ -8,69 +8,62 @@ import 'package:todoapp/data/model/task_model.dart';
 import 'package:todoapp/data/network_caller/network_caller.dart';
 import 'package:todoapp/data/utilities/url.dart';
 
-class CanceledTaskScreen extends StatefulWidget {
-  const CanceledTaskScreen({super.key});
+class CancelledTaskScreen extends StatefulWidget {
+  const CancelledTaskScreen({super.key});
 
   @override
-  State<CanceledTaskScreen> createState() => _CanceledTaskScreenState();
+  State<CancelledTaskScreen> createState() => _CancelledTaskScreenState();
 }
 
-class _CanceledTaskScreenState extends State<CanceledTaskScreen> {
-  bool _canceledTaskIndicator = false;
-  List<TaskModel> canceledTaskList = [];
+class _CancelledTaskScreenState extends State<CancelledTaskScreen> {
+  bool _getTaskInProgress = false;
+  List<TaskModel> _taskList = [];
 
   @override
   void initState() {
-    _completedNewTasks();
     super.initState();
+    _getCancelledTasks();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
-        child: Column(
-          children: [
-            const SizedBox(height: 8),
-            Expanded(
-                child: Visibility(
-              visible: _canceledTaskIndicator == false,
-              replacement: const CenteredProgressIndicator(),
-              child: ListView.builder(
-                itemCount: canceledTaskList.length,
-                itemBuilder: (context, index) {
-                  return TaskItems(
-                    taskModel: canceledTaskList[index],
-                  );
-                },
-              ),
-            ))
-          ],
+      body: Visibility(
+        visible: _getTaskInProgress == false,
+        replacement: const CenteredProgressIndicator(),
+        child: ListView.builder(
+          itemCount: _taskList.length,
+          itemBuilder: (context, index) {
+            return TaskItem(
+              taskModel: _taskList[index],
+              onUpdateTask: () {
+                _getCancelledTasks();
+              },
+            );
+          },
         ),
       ),
     );
   }
 
-  Future<void> _completedNewTasks() async {
-    _canceledTaskIndicator = true;
+  Future<void> _getCancelledTasks() async {
+    _getTaskInProgress = true;
     if (mounted) {
       setState(() {});
     }
-
     NetworkResponse response =
-        await NetworkCaller.getRequest(AppUrls.canceledTaskUrl);
+        await NetworkCaller.getRequest(AppUrls.progressTasks);
     if (response.isSuccess) {
       TaskListWrapperModel taskListWrapperModel =
           TaskListWrapperModel.fromJson(response.responseData);
-
-      canceledTaskList = taskListWrapperModel.list ?? [];
+      _taskList = taskListWrapperModel.taskList ?? [];
     } else {
       if (mounted) {
-        showSnackBarMessage(context, "Get Completed task failed");
+        showSnackBarMessage(context,
+            response.errorMessage ?? 'Get progress task failed! Try again');
       }
     }
-    _canceledTaskIndicator = false;
+    _getTaskInProgress = false;
     if (mounted) {
       setState(() {});
     }

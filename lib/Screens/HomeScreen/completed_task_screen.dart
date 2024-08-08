@@ -16,61 +16,60 @@ class CompletedTaskScreen extends StatefulWidget {
 }
 
 class _CompletedTaskScreenState extends State<CompletedTaskScreen> {
-  bool _completedTaskIndicator = false;
-  List<TaskModel> completedTaskList = [];
+  bool _getCompletedTasksInProgress = false;
+  List<TaskModel> completedTasks = [];
 
   @override
   void initState() {
-    _completedNewTasks();
     super.initState();
+    _getCompletedTasks();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
-        child: Column(
-          children: [
-            const SizedBox(height: 8),
-            Expanded(
-                child: Visibility(
-              visible: _completedTaskIndicator == false,
-              replacement: const CenteredProgressIndicator(),
-              child: ListView.builder(
-                itemCount: completedTaskList.length,
-                itemBuilder: (context, index) {
-                  return TaskItems(
-                    taskModel: completedTaskList[index],
-                  );
-                },
-              ),
-            ))
-          ],
+      body: RefreshIndicator(
+        onRefresh: () async => _getCompletedTasks(),
+        child: Visibility(
+          visible: _getCompletedTasksInProgress == false,
+          replacement: const CenteredProgressIndicator(),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: ListView.builder(
+              itemCount: completedTasks.length,
+              itemBuilder: (context, index) {
+                return TaskItem(
+                  taskModel: completedTasks[index],
+                  onUpdateTask: () {
+                    _getCompletedTasks();
+                  },
+                );
+              },
+            ),
+          ),
         ),
       ),
     );
   }
 
-  Future<void> _completedNewTasks() async {
-    _completedTaskIndicator = true;
+  Future<void> _getCompletedTasks() async {
+    _getCompletedTasksInProgress = true;
     if (mounted) {
       setState(() {});
     }
-
     NetworkResponse response =
-        await NetworkCaller.getRequest(AppUrls.completedTaskUrl);
+        await NetworkCaller.getRequest(AppUrls.completedTasks);
     if (response.isSuccess) {
       TaskListWrapperModel taskListWrapperModel =
           TaskListWrapperModel.fromJson(response.responseData);
-
-      completedTaskList = taskListWrapperModel.list ?? [];
+      completedTasks = taskListWrapperModel.taskList ?? [];
     } else {
       if (mounted) {
-        showSnackBarMessage(context, "Get Completed task failed");
+        showSnackBarMessage(
+            context, response.errorMessage ?? 'Get new task failed! Try again');
       }
     }
-    _completedTaskIndicator = false;
+    _getCompletedTasksInProgress = false;
     if (mounted) {
       setState(() {});
     }

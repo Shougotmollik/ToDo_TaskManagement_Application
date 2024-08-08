@@ -7,18 +7,17 @@ import 'package:todoapp/data/model/network_response.dart';
 import 'package:todoapp/data/network_caller/network_caller.dart';
 import 'package:todoapp/data/utilities/url.dart';
 
-class AddTaskScreen extends StatefulWidget {
-  const AddTaskScreen({super.key});
+class AddNewTaskScreen extends StatefulWidget {
+  const AddNewTaskScreen({super.key});
 
   @override
-  State<AddTaskScreen> createState() => _AddTaskScreenState();
+  State<AddNewTaskScreen> createState() => _AddNewTaskScreenState();
 }
 
-class _AddTaskScreenState extends State<AddTaskScreen> {
+class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
   final TextEditingController _titleTEController = TextEditingController();
   final TextEditingController _descriptionTEController =
       TextEditingController();
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _addNewTaskInProgress = false;
 
@@ -27,63 +26,54 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     return Scaffold(
       appBar: profileAppBar(context),
       body: BackgroundWidgets(
-          child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 50),
-                Text("Add New Task",
-                    style: Theme.of(context).textTheme.titleLarge),
-                const SizedBox(height: 16),
-                TextFormField(
-                  controller: _titleTEController,
-                  decoration: const InputDecoration(
-                      hintText: "Title",
-                      hintStyle: TextStyle(
-                        color: Colors.grey,
-                      )),
-                  validator: (String? value) {
-                    if (value?.trim().isEmpty ?? true) {
-                      return "Enter Your Title";
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 8),
-                TextFormField(
-                  controller: _descriptionTEController,
-                  decoration: const InputDecoration(
-                      hintText: "Description",
-                      hintStyle: TextStyle(color: Colors.grey)),
-                  maxLines: 8,
-                  validator: (String? value) {
-                    if (value?.trim().isEmpty ?? true) {
-                      return "Enter your description";
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 24),
-                Visibility(
-                  visible: _addNewTaskInProgress == false,
-                  replacement: const CenteredProgressIndicator(),
-                  child: ElevatedButton(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  TextFormField(
+                    controller: _titleTEController,
+                    decoration: const InputDecoration(hintText: 'Title'),
+                    validator: (String? value) {
+                      if (value?.trim().isEmpty ?? true) {
+                        return 'Enter title';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 8),
+                  TextFormField(
+                    controller: _descriptionTEController,
+                    maxLines: 4,
+                    decoration: const InputDecoration(hintText: 'Description'),
+                    validator: (String? value) {
+                      if (value?.trim().isEmpty ?? true) {
+                        return 'Enter description';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                  Visibility(
+                    visible: _addNewTaskInProgress == false,
+                    replacement: const CenteredProgressIndicator(),
+                    child: ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           _addNewTask();
                         }
                       },
-                      child: const Icon(Icons.arrow_circle_right_outlined)),
-                )
-              ],
+                      child: const Text('Add'),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),
-      )),
+      ),
     );
   }
 
@@ -95,31 +85,29 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     Map<String, dynamic> requestData = {
       "title": _titleTEController.text.trim(),
       "description": _descriptionTEController.text.trim(),
-      "status": "New"
+      "status": "New",
     };
     NetworkResponse response = await NetworkCaller.postRequest(
-      AppUrls.createTaskUrl,
+      AppUrls.createTask,
       body: requestData,
     );
-
     _addNewTaskInProgress = false;
     if (mounted) {
       setState(() {});
     }
-
     if (response.isSuccess) {
-      _clearTextField();
+      _clearTextFields();
       if (mounted) {
-        showSnackBarMessage(context, "New Task Created");
+        showSnackBarMessage(context, 'New task added!');
       }
     } else {
       if (mounted) {
-        showSnackBarMessage(context, 'Task creation failed ! Try Again', true);
+        showSnackBarMessage(context, 'New task add failed! Try again.', true);
       }
     }
   }
 
-  void _clearTextField() {
+  void _clearTextFields() {
     _titleTEController.clear();
     _descriptionTEController.clear();
   }

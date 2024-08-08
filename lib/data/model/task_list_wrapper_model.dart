@@ -2,16 +2,16 @@ import 'package:todoapp/data/model/task_model.dart';
 
 class TaskListWrapperModel {
   String? status;
-  List<TaskModel>? list;
+  List<TaskModel>? taskList;
 
-  TaskListWrapperModel({this.status, this.list});
+  TaskListWrapperModel({this.status, this.taskList});
 
   TaskListWrapperModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     if (json['data'] != null) {
-      list = <TaskModel>[];
+      taskList = <TaskModel>[];
       json['data'].forEach((v) {
-        // data!.add(TaskModel.fromJson(v));
+        taskList!.add(TaskModel.fromJson(v));
       });
     }
   }
@@ -19,8 +19,8 @@ class TaskListWrapperModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['status'] = status;
-    if (list != null) {
-      data['data'] = list!.map((v) => v.toJson()).toString();
+    if (taskList != null) {
+      data['data'] = taskList!.map((v) => v.toJson()).toList();
     }
     return data;
   }

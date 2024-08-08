@@ -1,4 +1,4 @@
-import 'package:todoapp/data/network_caller/user_model.dart';
+import 'package:todoapp/data/model/user_model.dart';
 
 class LoginModel {
   String? status;

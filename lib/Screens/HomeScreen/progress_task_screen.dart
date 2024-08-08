@@ -16,61 +16,57 @@ class ProgressTaskScreen extends StatefulWidget {
 }
 
 class _ProgressTaskScreenState extends State<ProgressTaskScreen> {
-  bool _progressTaskIndicator = false;
-  List<TaskModel> progressTaskList = [];
+  bool _getTaskInProgress = false;
+  List<TaskModel> _taskList = [];
 
   @override
   void initState() {
-    _completedNewTasks();
     super.initState();
+    _getProgressTasks();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
-        child: Column(
-          children: [
-            const SizedBox(height: 8),
-            Expanded(
-                child: Visibility(
-              visible: _progressTaskIndicator == false,
-              replacement: const CenteredProgressIndicator(),
-              child: ListView.builder(
-                itemCount: progressTaskList.length,
-                itemBuilder: (context, index) {
-                  return TaskItems(
-                    taskModel: progressTaskList[index],
-                  );
+      body: Visibility(
+        visible: _getTaskInProgress == false,
+        replacement: const CenteredProgressIndicator(),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: ListView.builder(
+            itemCount: _taskList.length,
+            itemBuilder: (context, index) {
+              return TaskItem(
+                taskModel: _taskList[index],
+                onUpdateTask: () {
+                  _getProgressTasks();
                 },
-              ),
-            ))
-          ],
+              );
+            },
+          ),
         ),
       ),
     );
   }
 
-  Future<void> _completedNewTasks() async {
-    _progressTaskIndicator = true;
+  Future<void> _getProgressTasks() async {
+    _getTaskInProgress = true;
     if (mounted) {
       setState(() {});
     }
-
     NetworkResponse response =
-        await NetworkCaller.getRequest(AppUrls.progressTaskUrl);
+        await NetworkCaller.getRequest(AppUrls.progressTasks);
     if (response.isSuccess) {
       TaskListWrapperModel taskListWrapperModel =
           TaskListWrapperModel.fromJson(response.responseData);
-
-      progressTaskList = taskListWrapperModel.list ?? [];
+      _taskList = taskListWrapperModel.taskList ?? [];
     } else {
       if (mounted) {
-        showSnackBarMessage(context, "Get Progress task failed");
+        showSnackBarMessage(context,
+            response.errorMessage ?? 'Get progress task failed! Try again');
       }
     }
-    _progressTaskIndicator = false;
+    _getTaskInProgress = false;
     if (mounted) {
       setState(() {});
     }

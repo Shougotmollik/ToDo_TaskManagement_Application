@@ -7,8 +7,9 @@ import 'package:todoapp/Screens/HomeScreen/main_bottom_nav_screen.dart';
 import 'package:todoapp/Screens/widgets/background_widgets.dart';
 import 'package:todoapp/Screens/widgets/snack_bar_message.dart';
 import 'package:todoapp/controller/auth_controller.dart';
+import 'package:todoapp/data/model/login_model.dart';
 import 'package:todoapp/data/model/network_response.dart';
-import 'package:todoapp/data/network_caller/login-model.dart';
+
 import 'package:todoapp/data/network_caller/network_caller.dart';
 import 'package:todoapp/data/utilities/url.dart';
 import 'package:todoapp/utility/app_constants.dart';
@@ -159,7 +160,7 @@ class _SignInScreenState extends State<SignInScreen> {
     };
 
     final NetworkResponse response =
-        await NetworkCaller.postRequest(AppUrls.loginUrl, body: requestData);
+        await NetworkCaller.postRequest(AppUrls.login, body: requestData);
 
     _signInProgress = false;
     if (mounted) {
